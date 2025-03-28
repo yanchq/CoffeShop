@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">CoffeShop</string>
+    <string name="sign_up_title">Sign Up</string>
+    <string name="sign_up_description">We are so excited you’re ready to
+        become apart of our coffee network!
+        don’t forget  check out your perks!</string>
+    <string name="enter_user_name">Enter user name</string>
+    <string name="email_or_phone">Type your email or phone</string>
+    <string name="password">Type your password</string>
+    <string name="register_button">REGISTER</string>
+    <string name="sign_in_button">SIGN IN</string>
+    <string name="have_account">Already have an account?</string>
+    <string name="skip">Skip</string>
+    <string name="weak_password">Weak password</string>
+    <string name="bad_email">email is incorrect</string>
+    <string name="incorrect_username">Incorrect username</string>
+    <string name="incorrect_email">Incorrect email</string>
+    <string name="user_exists">User with this email already exists</string>
+    <string name="sign_in_title">Sign in</string>
+    <string name="sign_in_description">It’s coffee time! Login and lets get all the
+        coffee in the world! Or at least iced
+        coffee. </string>
+    <string name="login">LOGIN</string>
+    <string name="create_new_account">CREATE NEW ACCOUNT</string>
+    <string name="no_account">Don\'t have an account?</string>
+    <string name="forgot_password">Forgot password?</string>
+
+</resources>
