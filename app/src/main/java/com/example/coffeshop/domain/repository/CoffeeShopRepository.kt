@@ -20,5 +20,5 @@ interface CoffeeShopRepository {
 
     suspend fun login(email: String, password: String, successCallback: () -> Unit)
 
-    suspend fun getListItem(): List<Item>
+    suspend fun getListItem(): List<Any>
 }

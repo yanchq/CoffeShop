@@ -1,4 +1,4 @@
-package com.example.coffeshop.presentation
+package com.example.coffeshop.presentation.signup
 
 import android.os.Bundle
 import android.text.Editable
@@ -7,29 +7,31 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.coffeshop.R
 import com.example.coffeshop.databinding.FragmentSignUpBinding
 import com.example.coffeshop.domain.entity.Client
+import com.example.coffeshop.presentation.SignUpFragmentDirections
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class SignUpFragment : Fragment() {
 
     private var _binding: FragmentSignUpBinding? = null
     private val binding: FragmentSignUpBinding
         get() = _binding ?: throw RuntimeException("FragmentSignUpBinding is null")
 
-    private lateinit var viewModel: SignUpViewModel
+    private val viewModel: SignUpViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        viewModel = ViewModelProvider(this)[SignUpViewModel::class.java]
         _binding = FragmentSignUpBinding.inflate(inflater,container,false)
         return binding.root
     }
@@ -116,8 +118,7 @@ class SignUpFragment : Fragment() {
                         ),
                         binding.etPassword.text.toString(),
                         successCallback = {
-                            findNavController().navigate(SignUpFragmentDirections
-                                .actionSignUpFragmentToHomeFragment())
+                            findNavController().navigate(SignUpFragmentDirections.actionSignUpFragmentToHomeFragment())
                         }
                     )
                 }  catch (e: FirebaseAuthInvalidCredentialsException) {
@@ -127,8 +128,7 @@ class SignUpFragment : Fragment() {
         }
 
         binding.signInButton.setOnClickListener {
-            findNavController().navigate(SignUpFragmentDirections
-                .actionSignUpFragmentToSignInFragment())
+            findNavController().navigate(SignUpFragmentDirections.actionSignUpFragmentToSignInFragment())
         }
     }
 

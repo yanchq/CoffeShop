@@ -6,7 +6,7 @@
     app:startDestination="@id/loadFragment">
     <fragment
         android:id="@+id/loadFragment"
-        android:name="com.example.coffeshop.presentation.LoadFragment"
+        android:name="com.example.coffeshop.presentation.load.LoadFragment"
         android:label="fragment_load"
         tools:layout="@layout/fragment_load" >
         <action
@@ -22,7 +22,7 @@
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
-        android:name="com.example.coffeshop.presentation.SignUpFragment"
+        android:name="com.example.coffeshop.presentation.signup.SignUpFragment"
         android:label="fragment_sign_up"
         tools:layout="@layout/fragment_sign_up" >
         <action
@@ -38,7 +38,7 @@
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.coffeshop.presentation.HomeFragment"
+        android:name="com.example.coffeshop.presentation.home.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -49,7 +49,7 @@
     </fragment>
     <fragment
         android:id="@+id/signInFragment"
-        android:name="com.example.coffeshop.presentation.SignInFragment"
+        android:name="com.example.coffeshop.presentation.signin.SignInFragment"
         android:label="fragment_sign_in"
         tools:layout="@layout/fragment_sign_in" >
         <action

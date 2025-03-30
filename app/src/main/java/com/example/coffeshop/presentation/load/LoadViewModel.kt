@@ -1,16 +1,19 @@
-package com.example.coffeshop.presentation
+package com.example.coffeshop.presentation.load
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.coffeshop.data.CoffeeShopRepositoryImpl
 import com.example.coffeshop.domain.usecase.IsLoggedUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class LoadViewModel(application: Application): AndroidViewModel(application)  {
+@HiltViewModel
+class LoadViewModel @Inject constructor(
+    private val repository: CoffeeShopRepositoryImpl
+): ViewModel()  {
 
-    private val repository = CoffeeShopRepositoryImpl(application)
     private val isLoggedUseCase = IsLoggedUseCase(repository)
 
     private var _loggedId = MutableLiveData<Long>()

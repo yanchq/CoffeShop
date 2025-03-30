@@ -1,9 +1,9 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.ksp)
     alias(libs.plugins.gms)
     alias(libs.plugins.navigation.safeargs)
+    alias(libs.plugins.hilt)
     id("kotlin-kapt")
 }
 
@@ -41,10 +41,14 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
+    kapt {
+        correctErrorTypes = true
+    }
 }
 
 dependencies {
 
+    implementation(libs.jetbrains.kotlinx.metadata.jvm)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
@@ -58,12 +62,6 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
     //ViewModel
     implementation(libs.viewModel)
-//Room
-    implementation(libs.room)
-// Кодогенератор Room
-    ksp(libs.room.compiler)
-// optional - Kotlin Extensions and Coroutines support for Room
-    implementation(libs.room.ktx)
 
     implementation(platform(libs.firebase.bom))
     implementation(platform(libs.firebase.analytics))

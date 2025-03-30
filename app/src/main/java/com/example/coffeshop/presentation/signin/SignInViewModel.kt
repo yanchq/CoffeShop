@@ -1,15 +1,18 @@
-package com.example.coffeshop.presentation
+package com.example.coffeshop.presentation.signin
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.example.coffeshop.data.CoffeeShopRepositoryImpl
 import com.example.coffeshop.domain.usecase.LoginUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class SignInViewModel(application: Application) : AndroidViewModel(application) {
+@HiltViewModel
+class SignInViewModel @Inject constructor(
+    private val repository: CoffeeShopRepositoryImpl
+): ViewModel() {
 
-    private val repository = CoffeeShopRepositoryImpl(application)
     private val loginUseCase = LoginUseCase(repository)
 
     private val _weakPasswordFlag = MutableLiveData<Boolean>()

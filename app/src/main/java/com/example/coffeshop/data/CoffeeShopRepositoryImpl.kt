@@ -8,16 +8,13 @@ import com.example.coffeshop.domain.entity.Item
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
+import javax.inject.Inject
 
-class CoffeeShopRepositoryImpl(
+class CoffeeShopRepositoryImpl @Inject constructor(
     private val database: FirebaseFirestore,
-    private val auth: FirebaseAuth
+    private val auth: FirebaseAuth,
+    private val mapper: CoffeeShopMapper
 ) : CoffeeShopRepository {
-
-    private val mapper = CoffeeShopMapper()
-//    private val database = FirebaseFirestore.getInstance()
-//    private val auth = FirebaseAuth.getInstance()
-
 
     override suspend fun saveClient(
         client: Client, password: String,
@@ -119,9 +116,10 @@ class CoffeeShopRepositoryImpl(
 
     }
 
-    override suspend fun getListItem(): List<Item> {
-        val list = mutableListOf<Item>()
+    override suspend fun getListItem(): List<Any> {
+        val list = mutableListOf<Any>()
 
+        list.add(DRINKS_COLLECTION)
         database.collection(DRINKS_COLLECTION).get()
             .addOnSuccessListener {
                 it.documents.forEach { item ->
@@ -136,6 +134,7 @@ class CoffeeShopRepositoryImpl(
                 }
             }.await()
 
+        list.add(FOOD_COLLECTION)
         database.collection(FOOD_COLLECTION).get()
             .addOnSuccessListener {
                 it.documents.forEach { item ->
@@ -151,6 +150,7 @@ class CoffeeShopRepositoryImpl(
 
             }.await()
 
+        list.add(HOME_COLLECTION)
         database.collection(HOME_COLLECTION).get()
             .addOnSuccessListener {
                 it.documents.forEach { item ->
@@ -166,6 +166,7 @@ class CoffeeShopRepositoryImpl(
 
             }.await()
 
+        list.add(MERCH_COLLECTION)
         database.collection(MERCH_COLLECTION).get()
             .addOnSuccessListener {
                 it.documents.forEach { item ->
