@@ -11,10 +11,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
-    private val repository: CoffeeShopRepositoryImpl
+    private val saveClientUseCase: SaveClientUseCase
 ): ViewModel() {
-
-    private val saveClientUseCase = SaveClientUseCase(repository)
 
     private val _weakPasswordFlag = MutableLiveData<Boolean>()
     val weakPasswordFlag: LiveData<Boolean>

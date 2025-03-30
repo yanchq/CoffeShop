@@ -8,10 +8,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val repository: CoffeeShopRepositoryImpl
+    private val unloggedUseCase: SignOutUseCase
 ): ViewModel() {
-
-    private val unloggedUseCase = SignOutUseCase(repository)
 
     suspend fun unlogged() {
         unloggedUseCase.invoke()

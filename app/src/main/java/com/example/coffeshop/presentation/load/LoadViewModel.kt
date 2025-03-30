@@ -11,10 +11,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoadViewModel @Inject constructor(
-    private val repository: CoffeeShopRepositoryImpl
+    private val isLoggedUseCase: IsLoggedUseCase
 ): ViewModel()  {
-
-    private val isLoggedUseCase = IsLoggedUseCase(repository)
 
     private var _loggedId = MutableLiveData<Long>()
     val loggedId: MutableLiveData<Long>

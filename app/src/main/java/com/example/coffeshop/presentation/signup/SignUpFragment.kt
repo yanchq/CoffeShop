@@ -13,7 +13,6 @@ import androidx.navigation.fragment.findNavController
 import com.example.coffeshop.R
 import com.example.coffeshop.databinding.FragmentSignUpBinding
 import com.example.coffeshop.domain.entity.Client
-import com.example.coffeshop.presentation.SignUpFragmentDirections
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch

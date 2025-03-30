@@ -182,8 +182,6 @@ class CoffeeShopRepositoryImpl @Inject constructor(
 
             }.await()
 
-        Log.d("GetListTest", list.toString())
-
         return list.toList()
     }
 

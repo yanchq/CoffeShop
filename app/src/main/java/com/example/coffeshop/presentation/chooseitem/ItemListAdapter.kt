@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.coffeshop.R
 import com.example.coffeshop.domain.entity.Item
+import kotlin.collections.get
 
 class ItemListAdapter(
     val items: List<Any>
@@ -44,6 +45,9 @@ class ItemListAdapter(
         }
     }
 
+    fun isHeader(position: Int) = items[position] is String
+
+
     class ProductViewHolder(itemView : View): ViewHolder(itemView) {
         val productImage: ImageView = itemView.findViewById(R.id.product_image)
         val productName: TextView = itemView.findViewById(R.id.product_name)
@@ -52,6 +56,7 @@ class ItemListAdapter(
     class HeaderViewHolder(itemView: View): ViewHolder(itemView) {
         val headerName: TextView = itemView.findViewById(R.id.header_name)
     }
+
 
     companion object {
         private const val VIEW_TYPE_HEADER = 0
