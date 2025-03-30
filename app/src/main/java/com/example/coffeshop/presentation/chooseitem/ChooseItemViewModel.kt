@@ -1,16 +1,19 @@
-package com.example.coffeshop.presentation
+package com.example.coffeshop.presentation.chooseitem
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.example.coffeshop.data.CoffeeShopRepositoryImpl
 import com.example.coffeshop.domain.entity.Item
 import com.example.coffeshop.domain.usecase.GetListItemUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class ChooseItemViewModel(application: Application): AndroidViewModel(application) {
+@HiltViewModel
+class ChooseItemViewModel @Inject constructor(
+    private val repository: CoffeeShopRepositoryImpl
+): ViewModel() {
 
-    private val repository = CoffeeShopRepositoryImpl(application)
     private val getListItemUseCase = GetListItemUseCase(repository)
 
     private val _listItem = MutableLiveData<List<Item>>()

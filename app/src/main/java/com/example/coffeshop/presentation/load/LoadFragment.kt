@@ -1,22 +1,22 @@
-package com.example.coffeshop.presentation
+package com.example.coffeshop.presentation.load
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.example.coffeshop.R
 import com.example.coffeshop.databinding.FragmentLoadBinding
+import com.example.coffeshop.presentation.LoadFragmentDirections
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class LoadFragment : Fragment() {
 
-    private lateinit var viewModel: LoadViewModel
+    private val viewModel: LoadViewModel by viewModels()
 
     private var _binding: FragmentLoadBinding? = null
     private val binding: FragmentLoadBinding
@@ -35,7 +35,6 @@ class LoadFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProvider(this)[LoadViewModel::class]
         launchObservers()
         lifecycleScope.launch {
             viewModel.getLoggedId()
@@ -45,11 +44,9 @@ class LoadFragment : Fragment() {
     private fun launchObservers() {
         viewModel.loggedId.observe(viewLifecycleOwner) {
             if (it == 0L) {
-                findNavController().navigate(LoadFragmentDirections
-                    .actionLoadFragmentToSignUpFragment())
+                findNavController().navigate(LoadFragmentDirections.actionLoadFragmentToSignUpFragment())
             } else {
-                findNavController().navigate(LoadFragmentDirections
-                    .actionLoadFragmentToHomeFragment())
+                findNavController().navigate(LoadFragmentDirections.actionLoadFragmentToHomeFragment())
             }
         }
     }

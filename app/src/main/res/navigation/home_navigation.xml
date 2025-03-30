@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/chooseItemFragment"
-        android:name="com.example.coffeshop.presentation.ChooseItemFragment"
+        android:name="com.example.coffeshop.presentation.chooseitem.ChooseItemFragment"
         android:label="fragment_choose_item"
         tools:layout="@layout/fragment_choose_item" />
 </navigation>

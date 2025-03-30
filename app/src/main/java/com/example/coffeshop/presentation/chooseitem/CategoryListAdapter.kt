@@ -1,4 +1,4 @@
-package com.example.coffeshop.presentation
+package com.example.coffeshop.presentation.chooseitem
 
 import android.view.LayoutInflater
 import android.view.View
@@ -27,6 +27,6 @@ class CategoryListAdapter(
     }
 
     class CategoryViewHolder(itemView: View) : ViewHolder(itemView) {
-        val categoryName = itemView.findViewById<TextView>(R.id.category_name)
+        val categoryName: TextView = itemView.findViewById(R.id.category_name)
     }
 }

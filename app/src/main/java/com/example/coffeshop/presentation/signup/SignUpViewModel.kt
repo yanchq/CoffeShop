@@ -1,18 +1,18 @@
-package com.example.coffeshop.presentation
+package com.example.coffeshop.presentation.signup
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.example.coffeshop.data.CoffeeShopRepositoryImpl
 import com.example.coffeshop.domain.entity.Client
 import com.example.coffeshop.domain.usecase.SaveClientUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class SignUpViewModel(
-    application: Application
-) : AndroidViewModel(application) {
-
-    private var repository = CoffeeShopRepositoryImpl(application)
+@HiltViewModel
+class SignUpViewModel @Inject constructor(
+    private val repository: CoffeeShopRepositoryImpl
+): ViewModel() {
 
     private val saveClientUseCase = SaveClientUseCase(repository)
 

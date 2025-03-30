@@ -1,4 +1,4 @@
-package com.example.coffeshop.presentation
+package com.example.coffeshop.presentation.chooseitem
 
 import android.view.LayoutInflater
 import android.view.View
@@ -32,8 +32,6 @@ class ItemListAdapter(
 
     override fun getItemCount(): Int = items.size
 
-    fun isHeader(position: Int) = getItemViewType(position) == VIEW_TYPE_HEADER
-
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items[position]
         if (getItemViewType(position) == VIEW_TYPE_HEADER) {
@@ -41,17 +39,18 @@ class ItemListAdapter(
         }
         else {
             (holder as ProductViewHolder).productName.text = (item as Item).name
+            holder.productImage.setImageResource(R.drawable.ic_product)
 
         }
     }
 
     class ProductViewHolder(itemView : View): ViewHolder(itemView) {
-        val productImage = itemView.findViewById<ImageView>(R.id.product_image)
-        val productName = itemView.findViewById<TextView>(R.id.product_name)
+        val productImage: ImageView = itemView.findViewById(R.id.product_image)
+        val productName: TextView = itemView.findViewById(R.id.product_name)
     }
 
     class HeaderViewHolder(itemView: View): ViewHolder(itemView) {
-        val headerName = itemView.findViewById<TextView>(R.id.header_name)
+        val headerName: TextView = itemView.findViewById(R.id.header_name)
     }
 
     companion object {

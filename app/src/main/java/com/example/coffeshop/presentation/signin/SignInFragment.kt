@@ -1,4 +1,4 @@
-package com.example.coffeshop.presentation
+package com.example.coffeshop.presentation.signin
 
 import android.os.Bundle
 import android.text.Editable
@@ -7,22 +7,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.coffeshop.R
 import com.example.coffeshop.databinding.FragmentSignInBinding
+import com.example.coffeshop.presentation.SignInFragmentDirections
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class SignInFragment : Fragment() {
 
     private var _binding: FragmentSignInBinding? = null
     private val binding: FragmentSignInBinding
         get() = _binding ?: throw RuntimeException("FragmentSignInBinding is null")
 
-    private val viewModel: SignInViewModel by lazy {
-        ViewModelProvider(this)[SignInViewModel::class]
-    }
+    private val viewModel: SignInViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,8 +46,7 @@ class SignInFragment : Fragment() {
 
         binding.registerButton.setOnClickListener {
             findNavController().navigate(
-                SignInFragmentDirections
-                    .actionSignInFragmentToSignUpFragment()
+                SignInFragmentDirections.actionSignInFragmentToSignUpFragment()
             )
         }
 
@@ -58,8 +58,7 @@ class SignInFragment : Fragment() {
                     binding.etPassword.text.toString(),
                     {
                         findNavController().navigate(
-                            SignInFragmentDirections
-                                .actionSignInFragmentToHomeFragment()
+                            SignInFragmentDirections.actionSignInFragmentToHomeFragment()
                         )
                     }
                 )

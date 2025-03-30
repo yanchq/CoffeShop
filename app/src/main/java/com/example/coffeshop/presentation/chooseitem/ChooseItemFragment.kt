@@ -1,27 +1,23 @@
-package com.example.coffeshop.presentation
+package com.example.coffeshop.presentation.chooseitem
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
+import androidx.fragment.app.viewModels
 import com.example.coffeshop.databinding.FragmentChooseItemBinding
-import com.example.coffeshop.databinding.FragmentSignInBinding
-import com.example.coffeshop.domain.usecase.GetListItemUseCase
-import kotlinx.coroutines.launch
+import dagger.hilt.android.AndroidEntryPoint
 
-class ChooseItemFragment: Fragment() {
+@AndroidEntryPoint
+class ChooseItemFragment : Fragment() {
 
 
     private var _binding: FragmentChooseItemBinding? = null
     private val binding: FragmentChooseItemBinding
         get() = _binding ?: throw RuntimeException("FragmentChooseItemBinding is null")
 
-    private val viewModel: ChooseItemViewModel by lazy {
-        ViewModelProvider(this)[ChooseItemViewModel::class]
-    }
+    private val viewModel: ChooseItemViewModel by viewModels()
 
 
     override fun onCreateView(
