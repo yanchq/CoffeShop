@@ -1,23 +1,33 @@
 package com.example.coffeshop.data
 
-import com.example.coffeshop.domain.entity.Client
+import com.example.coffeshop.domain.entity.Item
 import javax.inject.Inject
 
 class CoffeeShopMapper @Inject constructor() {
 
-    fun clientDbModelToEntity(clientDbModel: ClientDbModel): Client {
-        return Client(
-            id = clientDbModel.id,
-            name = clientDbModel.name,
-            email = clientDbModel.email
+    fun itemToDbModel(item: Item): OrderItemDbModel {
+        return OrderItemDbModel(
+            id = item.id,
+            name = item.name,
+            cost = item.cost,
+            category = item.category,
+            size = item.size,
+            sugar = item.sugar,
+            syrup = item.syrup,
+            image = item.image
         )
     }
 
-    fun clientEntityToDbModel(client: Client): ClientDbModel {
-        return ClientDbModel(
-            id = client.id,
-            name = client.name,
-            email = client.email
+    fun dbModelToItem(dbModel: OrderItemDbModel): Item {
+        return Item(
+            id = dbModel.id,
+            name = dbModel.name,
+            cost = dbModel.cost,
+            category = dbModel.category,
+            size = dbModel.size,
+            sugar = dbModel.sugar,
+            syrup = dbModel.syrup,
+            image = dbModel.image
         )
     }
 }

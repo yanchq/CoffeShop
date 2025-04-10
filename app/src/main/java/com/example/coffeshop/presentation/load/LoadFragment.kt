@@ -6,11 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.example.coffeshop.databinding.FragmentLoadBinding
+import com.example.coffeshop.domain.entity.Item
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class LoadFragment : Fragment() {
@@ -35,9 +35,7 @@ class LoadFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         launchObservers()
-        lifecycleScope.launch {
-            viewModel.getLoggedId()
-        }
+        viewModel.getLoggedId()
     }
 
     private fun launchObservers() {
@@ -45,8 +43,19 @@ class LoadFragment : Fragment() {
             if (it == 0L) {
                 findNavController().navigate(LoadFragmentDirections.actionLoadFragmentToSignUpFragment())
             } else {
-                findNavController().navigate(LoadFragmentDirections.actionLoadFragmentToHomeFragment())
+                viewModel.getListItem()
             }
+        }
+
+        viewModel.listItem.observe(viewLifecycleOwner) {
+            it.forEach {
+                if (it is Item) {
+                    Glide.with(this)
+                        .load(it.image)
+                        .preload()
+                }
+            }
+            findNavController().navigate(LoadFragmentDirections.actionLoadFragmentToHomeFragment())
         }
     }
 

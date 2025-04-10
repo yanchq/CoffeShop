@@ -55,21 +55,24 @@
         android:elevation="20dp">
 
         <ImageButton
+            android:id="@+id/home_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="25dp"
-            android:src="@drawable/home_icon"
+            android:src="@drawable/active_home_icon"
             android:backgroundTint="@color/sign_up_primary_background"/>
 
         <ImageButton
+            android:id="@+id/order_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:src="@drawable/order_icon"
+            android:src="@drawable/not_active_order_icon"
             android:backgroundTint="@color/sign_up_primary_background"/>
 
         <ImageButton
+            android:id="@+id/account_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical | end"

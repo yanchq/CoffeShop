@@ -13,8 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="16dp"
-        android:src="@drawable/ic_product"/>
+        android:layout_marginTop="16dp"/>
     
     <TextView
         android:id="@+id/product_name"

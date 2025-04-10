@@ -26,5 +26,22 @@
     <string name="forgot_password">Forgot password?</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="product_name">Cappuccino</string>
+    <string name="cup_size">Cup size</string>
+    <string name="sugar">Sugar</string>
+    <string name="syrup">Syrup</string>
+    <string name="add_cart">Add to cart</string>
+    <string name="place_order">Place order</string>
 
+    <string-array name="cup_sizes">
+        <item>Large</item>
+        <item>Medium</item>
+        <item>Small</item>
+    </string-array>
+
+    <string-array name="syrups">
+        <item>Caramel</item>
+        <item>Chocolate</item>
+        <item>Coconut</item>
+    </string-array>
 </resources>
