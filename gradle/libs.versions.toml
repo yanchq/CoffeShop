@@ -20,6 +20,8 @@ firebaseAuthKtx = "23.2.0"
 navigation = "2.8.9"
 coroutines = "1.8.0"
 hilt = "2.51.1"
+room = "2.6.1"
+glide = "4.15.1"
 
 [libraries]
 firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "bomVersion" }
@@ -35,14 +37,26 @@ androidx-activity = { group = "androidx.activity", name = "activity", version.re
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 #ViewModel
 viewModel = {group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref ="viewModel_version"}
+lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "viewModel_version" }
+#Firebase
 firebase-common-ktx = { group = "com.google.firebase", name = "firebase-common-ktx", version.ref = "firebaseCommonKtx" }
 firebase-firestore-ktx = { group = "com.google.firebase", name = "firebase-firestore-ktx", version.ref = "firebaseFirestoreKtx" }
 firebase-auth-ktx = { group = "com.google.firebase", name = "firebase-auth-ktx", version.ref = "firebaseAuthKtx" }
+#Navigation
 navigation-fragment = { group = "androidx.navigation", name = "navigation-fragment", version.ref = "navigation" }
 navigation-ui = { group = "androidx.navigation", name = "navigation-ui", version.ref = "navigation" }
+#Coroutines
 coroutines-play-services = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-play-services", version.ref = "coroutines" }
+#Hilt
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
+#Room
+room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
+room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
+room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
+#Glide
+glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
+glide-compiler = { group = "com.github.bumptech.glide", name = "compiler", version.ref = "glide" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -51,3 +65,4 @@ ksp = {id = "com.google.devtools.ksp", version.ref ="ksp_version"}
 gms = {id = "com.google.gms.google-services", version.ref ="gmsVersion"}
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 navigation-safeargs = { id = "androidx.navigation.safeargs", version.ref = "navigation" }
+parcelize = { id = "kotlin-parcelize" }

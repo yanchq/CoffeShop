@@ -2,12 +2,13 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFF</color>
+    <color name="white_text">#F6F2ED</color>
     <color name="sign_up_secondary_background">#F8EBD8</color>
     <color name="sign_up_primary_background">#FAFAFA</color>
     <color name="sign_up_button">#4B2C20</color>
     <color name="hint">#989898</color>
     <color name="text_blue">#4E8D7C</color>
     <color name="main_background">#FCF0E1</color>
-
+    <color name="green">#4E8D7C</color>
 
 </resources>

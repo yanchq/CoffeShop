@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.gms)
     alias(libs.plugins.navigation.safeargs)
     alias(libs.plugins.hilt)
+    alias(libs.plugins.parcelize)
     id("kotlin-kapt")
 }
 
@@ -62,6 +63,7 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
     //ViewModel
     implementation(libs.viewModel)
+    implementation(libs.lifecycle.runtime.ktx)
 
     implementation(platform(libs.firebase.bom))
     implementation(platform(libs.firebase.analytics))
@@ -71,4 +73,11 @@ dependencies {
     implementation(libs.coroutines.play.services)
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
+    //Room
+    implementation(libs.room.runtime)
+    implementation(libs.room.ktx) // Опционально, если используете Kotlin
+    kapt(libs.room.compiler)
+    //Glide
+    implementation(libs.glide)
+    annotationProcessor(libs.glide.compiler)
 }

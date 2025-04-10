@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardBackgroundColor="@color/white"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="10dp"
+    android:elevation="8dp">
+
+    <ImageView
+        android:id="@+id/item_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="20dp"
+        android:src="@drawable/ic_product"/>
+
+    <TextView
+        android:id="@+id/item_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="15dp"
+        android:layout_marginStart="20dp"
+        android:text="Personalized Cold Cup"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/item_properties"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="130dp"
+        android:layout_marginTop="30dp"
+        android:textColor="@color/hint"
+        android:textSize="16sp"
+        android:text="size: Large\nSugar: Medium\nSyrup:None"/>
+
+    <TextView
+        android:id="@+id/item_cost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end |center_vertical"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginEnd="20dp"
+        android:text="5.25$"/>
+
+</androidx.cardview.widget.CardView>

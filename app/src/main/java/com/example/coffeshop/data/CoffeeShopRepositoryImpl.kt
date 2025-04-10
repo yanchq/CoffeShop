@@ -1,20 +1,24 @@
 package com.example.coffeshop.data
 
-import android.app.Application
 import android.util.Log
 import com.example.coffeshop.domain.entity.Client
-import com.example.coffeshop.domain.repository.CoffeeShopRepository
 import com.example.coffeshop.domain.entity.Item
+import com.example.coffeshop.domain.repository.CoffeeShopRepository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class CoffeeShopRepositoryImpl @Inject constructor(
     private val database: FirebaseFirestore,
     private val auth: FirebaseAuth,
-    private val mapper: CoffeeShopMapper
+    private val mapper: CoffeeShopMapper,
+    private val orderListDao: OrderListDao
 ) : CoffeeShopRepository {
+
+    private lateinit var listItem: List<Any>
 
     override suspend fun saveClient(
         client: Client, password: String,
@@ -67,10 +71,6 @@ class CoffeeShopRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun saveToOrder(item: Item) {
-        TODO("Not yet implemented")
-    }
-
     override suspend fun isLogged(): Long {
         val currentUser = auth.currentUser
         var userId = 0L
@@ -116,7 +116,27 @@ class CoffeeShopRepositoryImpl @Inject constructor(
 
     }
 
-    override suspend fun getListItem(): List<Any> {
+    override fun getListItem(): List<Any> {
+        return listItem
+    }
+
+    override fun getItem(itemId: Int): Item {
+        return listItem[itemId] as Item
+    }
+
+    override suspend fun deleteFromOrder(itemId: Int) {
+        orderListDao.deleteFromOrder(itemId)
+    }
+
+    override suspend fun getCurrentOrder(): List<Item> {
+        val orderList = mutableListOf<Item>()
+        orderListDao.getOrderList().map {
+            orderList.add(mapper.dbModelToItem(it))
+        }
+        return orderList
+    }
+
+    override suspend fun loadItemList(): List<Any> {
         val list = mutableListOf<Any>()
 
         list.add(DRINKS_COLLECTION)
@@ -182,7 +202,12 @@ class CoffeeShopRepositoryImpl @Inject constructor(
 
             }.await()
 
-        return list.toList()
+        listItem = list.toList()
+        return list
+    }
+
+    override suspend fun saveToOrder(item: Item) {
+        orderListDao.addToOrder(mapper.itemToDbModel(item))
     }
 
     companion object {

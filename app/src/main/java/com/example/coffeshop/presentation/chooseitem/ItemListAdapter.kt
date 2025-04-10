@@ -7,13 +7,15 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.bumptech.glide.Glide
 import com.example.coffeshop.R
 import com.example.coffeshop.domain.entity.Item
-import kotlin.collections.get
 
 class ItemListAdapter(
     val items: List<Any>
 ) : RecyclerView.Adapter<ViewHolder>() {
+
+    var onItemClickListener: ((Int) -> Unit)? = null
 
     override fun getItemViewType(position: Int): Int {
         return if (items[position] is String) VIEW_TYPE_HEADER
@@ -42,6 +44,17 @@ class ItemListAdapter(
             (holder as ProductViewHolder).productName.text = (item as Item).name
             holder.productImage.setImageResource(R.drawable.ic_product)
 
+            if (item.image.isNotBlank()) {
+                Glide.with(holder.productImage.context)
+                    .load(item.image)
+                    .placeholder(R.drawable.ic_product)
+                    .into(holder.productImage)
+
+            }
+        }
+
+        holder.itemView.setOnClickListener {
+            if (!isHeader(position)) onItemClickListener?.invoke(position)
         }
     }
 

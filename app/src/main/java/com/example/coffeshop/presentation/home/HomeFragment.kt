@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.example.coffeshop.R
 import com.example.coffeshop.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -33,11 +34,44 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val navController = childFragmentManager.findFragmentById(R.id.home)!!.findNavController()
+
         binding.tv.setOnClickListener {
             lifecycleScope.launch {
                 viewModel.unlogged()
             }
             findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToLoadFragment())
+        }
+
+        binding.orderButton.setOnClickListener {
+            if (navController.currentDestination?.id != R.id.orderFragment)
+                navController.navigate(R.id.action_global_orderFragment)
+        }
+
+        binding.homeButton.setOnClickListener {
+            if (navController.currentDestination?.id != R.id.chooseItemFragment)
+                navController.popBackStack(R.id.chooseItemFragment, false)
+        }
+
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            updateButtons(destination.id)
+        }
+    }
+
+    private fun updateButtons(currentDestinationId: Int) {
+        when (currentDestinationId) {
+
+            R.id.orderFragment -> {
+                binding.homeButton.setImageResource(R.drawable.not_active_home_icon)
+                binding.orderButton.setImageResource(R.drawable.active_order_icon)
+            }
+
+            else -> {
+                binding.homeButton.setImageResource(R.drawable.active_home_icon)
+                binding.orderButton.setImageResource(R.drawable.not_active_order_icon)
+            }
+
+
         }
     }
 

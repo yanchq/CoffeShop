@@ -9,5 +9,37 @@
         android:id="@+id/chooseItemFragment"
         android:name="com.example.coffeshop.presentation.chooseitem.ChooseItemFragment"
         android:label="fragment_choose_item"
-        tools:layout="@layout/fragment_choose_item" />
+        tools:layout="@layout/fragment_choose_item" >
+        <action
+            android:id="@+id/action_chooseItemFragment_to_editProductFragment"
+            app:destination="@id/editProductFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editProductFragment"
+        android:name="com.example.coffeshop.presentation.editproduct.EditProductFragment"
+        android:label="fragment_edit_product"
+        tools:layout="@layout/fragment_edit_product" >
+
+        <argument
+            android:name="itemId"
+            app:argType="integer"/>
+
+        <action
+            android:id="@+id/actino_editProductFragment_to_chooseItemFragment"
+            app:destination="@+id/chooseItemFragment"
+            app:popUpTo="@id/editProductFragment"
+            app:popUpToInclusive="true"/>
+    </fragment>
+    <fragment
+        android:id="@+id/orderFragment"
+        android:name="com.example.coffeshop.presentation.order.OrderFragment"
+        android:label="fragment_order"
+        tools:layout="@layout/fragment_order" >
+    </fragment>
+    <action
+        android:id="@+id/action_global_orderFragment"
+        app:destination="@id/orderFragment" />
+    <action
+        android:id="@+id/action_global_chooseItemFragment"
+        app:destination="@id/chooseItemFragment" />
 </navigation>

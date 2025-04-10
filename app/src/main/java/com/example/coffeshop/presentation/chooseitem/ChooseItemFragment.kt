@@ -6,10 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSmoothScroller
-import androidx.recyclerview.widget.LinearSmoothScroller.SNAP_TO_START
 import com.example.coffeshop.databinding.FragmentChooseItemBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -38,7 +38,7 @@ class ChooseItemFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        viewModel.getListItem()
         viewModel.listItem.observe(viewLifecycleOwner) {
             setupCategoryRecyclerView()
             setupProductsRecyclerView(it)
@@ -70,6 +70,12 @@ class ChooseItemFragment : Fragment() {
         }
         binding.productsRecyclerView.layoutManager = layoutManager
         binding.productsRecyclerView.adapter = itemListAdapter
+
+        itemListAdapter.onItemClickListener = {
+            findNavController().navigate(
+                ChooseItemFragmentDirections.actionChooseItemFragmentToEditProductFragment(it)
+            )
+        }
     }
 
     private fun scrollToCategory(categoryIndex: Int, categories: List<String>) {
