@@ -5,7 +5,7 @@ import javax.inject.Inject
 
 class IsLoggedUseCase @Inject constructor(private val repository: CoffeeShopRepository) {
 
-    suspend fun invoke(): Long {
+    suspend fun invoke(): Boolean {
         return repository.isLogged()
     }
 }

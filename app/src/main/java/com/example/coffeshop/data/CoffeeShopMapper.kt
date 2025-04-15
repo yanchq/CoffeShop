@@ -30,4 +30,13 @@ class CoffeeShopMapper @Inject constructor() {
             image = dbModel.image
         )
     }
+
+    fun listDbModelToListItem(listDbModel: List<OrderItemDbModel>): List<Item> {
+        val list = mutableListOf<Item>()
+
+        listDbModel.map {
+            list.add(dbModelToItem(it))
+        }
+        return list
+    }
 }

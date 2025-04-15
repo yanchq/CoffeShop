@@ -16,9 +16,9 @@ class LoadViewModel @Inject constructor(
     private val loadItemListUseCase: LoadItemListUseCase
 ): ViewModel()  {
 
-    private var _loggedId = MutableLiveData<Long>()
-    val loggedId: LiveData<Long>
-        get() = _loggedId
+    private var _isLogged = MutableLiveData<Boolean>()
+    val isLogged: LiveData<Boolean>
+        get() = _isLogged
 
     private var _listItem = MutableLiveData<List<Any>>()
     val listItem: LiveData<List<Any>>
@@ -26,8 +26,8 @@ class LoadViewModel @Inject constructor(
 
     fun getLoggedId() {
         viewModelScope.launch {
-                val id = isLoggedUseCase.invoke()
-                _loggedId.postValue(id)
+                val logged = isLoggedUseCase.invoke()
+                _isLogged.postValue(logged)
         }
     }
 

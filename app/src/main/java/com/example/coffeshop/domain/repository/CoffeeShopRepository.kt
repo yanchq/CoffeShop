@@ -2,6 +2,7 @@ package com.example.coffeshop.domain.repository
 
 import com.example.coffeshop.domain.entity.Client
 import com.example.coffeshop.domain.entity.Item
+import kotlinx.coroutines.flow.Flow
 
 interface CoffeeShopRepository {
 
@@ -14,7 +15,7 @@ interface CoffeeShopRepository {
 
     suspend fun saveToOrder(item: Item)
 
-    suspend fun isLogged(): Long
+    suspend fun isLogged(): Boolean
 
     suspend fun signOut()
 
@@ -26,7 +27,16 @@ interface CoffeeShopRepository {
 
     suspend fun deleteFromOrder(itemId: Int)
 
-    suspend fun getCurrentOrder(): List<Item>
+    suspend fun cleanOrder()
+
+    fun getCurrentOrder(): Flow<List<Item>>
 
     suspend fun loadItemList(): List<Any>
+
+    suspend fun placeOrder(
+        listItem: List<Item>,
+        onSuccessCallback: (Int) -> Unit
+    )
+
+    suspend fun getOrderStatusUseCase(orderId: Int): Flow<String>
 }

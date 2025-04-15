@@ -117,7 +117,7 @@ class SignUpFragment : Fragment() {
                         ),
                         binding.etPassword.text.toString(),
                         successCallback = {
-                            findNavController().navigate(SignUpFragmentDirections.actionSignUpFragmentToHomeFragment())
+                            findNavController().navigate(SignUpFragmentDirections.actionSignUpFragmentToLoadFragment())
                         }
                     )
                 }  catch (e: FirebaseAuthInvalidCredentialsException) {

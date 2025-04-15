@@ -3,9 +3,14 @@ package com.example.coffeshop.data
 import android.util.Log
 import com.example.coffeshop.domain.entity.Client
 import com.example.coffeshop.domain.entity.Item
+import com.example.coffeshop.domain.entity.Order
 import com.example.coffeshop.domain.repository.CoffeeShopRepository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -53,48 +58,18 @@ class CoffeeShopRepositoryImpl @Inject constructor(
 
     private fun addClientToDb(client: Client, successCallback: () -> Unit) {
 
-        val counterRef = database.collection(USERS_COLLECTION).document(USERS_COUNTER)
-
         database.runTransaction { transaction ->
-            val snapshot = transaction.get(counterRef)
-            var lastId = snapshot.getLong(USERS_COUNTER_VAL) ?: 0
-            lastId++
-            transaction.update(counterRef, USERS_COUNTER_VAL, lastId)
-
-            val clientToDb = client.copy(id = lastId)
-
-            database.collection(USERS_COLLECTION).document()
-                .set(clientToDb)
+            database.collection(USERS_COLLECTION).document(auth.currentUser!!.uid.toString())
+                .set(client)
 
         }.addOnSuccessListener {
             successCallback()
         }
     }
 
-    override suspend fun isLogged(): Long {
-        val currentUser = auth.currentUser
-        var userId = 0L
-        when (currentUser) {
-            null -> return 0L
-            else -> {
-                database.collection(USERS_COLLECTION)
-                    .whereEqualTo(USER_EMAIL, currentUser.email)
-                    .get()
-                    .addOnSuccessListener {
-                        Log.d("RegTest", "${it.documents[0]?.get(USER_ID)}")
-                        if (it.documents.isEmpty()) throw RuntimeException(
-                            "User with email: " +
-                                    "${currentUser.email} not exists"
-                        )
-                        else {
-                            userId = it.documents[0]?.get(USER_ID).toString().toLong()
-                        }
-                    }
-                    .addOnFailureListener { throw RuntimeException("cant get user by email") }
-                    .await()
-                return userId
-            }
-        }
+    override suspend fun isLogged(): Boolean {
+        Log.d("UserIdTest", auth.currentUser?.uid.toString())
+        return auth.currentUser != null
     }
 
     override suspend fun signOut() {
@@ -128,12 +103,13 @@ class CoffeeShopRepositoryImpl @Inject constructor(
         orderListDao.deleteFromOrder(itemId)
     }
 
-    override suspend fun getCurrentOrder(): List<Item> {
-        val orderList = mutableListOf<Item>()
+    override suspend fun cleanOrder() {
+        orderListDao.cleanOrder()
+    }
+
+    override fun getCurrentOrder(): Flow<List<Item>> =
         orderListDao.getOrderList().map {
-            orderList.add(mapper.dbModelToItem(it))
-        }
-        return orderList
+        mapper.listDbModelToListItem(it)
     }
 
     override suspend fun loadItemList(): List<Any> {
@@ -206,21 +182,71 @@ class CoffeeShopRepositoryImpl @Inject constructor(
         return list
     }
 
+    override suspend fun placeOrder(
+        listItem: List<Item>,
+        onSuccessCallback: (Int) -> Unit
+    ) {
+        val order = Order(listItem)
+        val docRef = database.collection(CLIENT_COLLECTION).document(auth.currentUser!!.uid)
+        val list = getOrders()
+        Log.d("SaveOrderTest", list.toString())
+        list.add(order)
+        Log.d("SaveOrderTest", list.toString())
+        docRef.update(USER_ORDERS, list)
+        onSuccessCallback(list.size - 1)
+    }
+
+    private suspend fun getOrders(): MutableList<Order> {
+        val docRef = database.collection(CLIENT_COLLECTION).document(auth.currentUser!!.uid)
+        val snapshot = docRef.get().await()
+        val firebaseList = snapshot.get(USER_ORDERS) as MutableList<Map<String, Any>>
+        return firebaseList.map { order ->
+            val items = (order["listItem"] as List<Map<String, Any>>).map { item ->
+                Item(
+                    name = item["name"] as String,
+                    cost = item["cost"] as Double,
+                    category = item["category"] as String,
+                    image = item["image"] as String,
+                    size = item["size"] as String,
+                    sugar = item["sugar"] as String,
+                    syrup = item["syrup"] as String
+                )
+            }
+            Order(listItem = items, status = order["status"] as String)
+        }.toMutableList()
+    }
+
+    override suspend fun getOrderStatusUseCase(orderId: Int): Flow<String> = callbackFlow {
+
+        val listener = database.collection(CLIENT_COLLECTION)
+            .document(auth.currentUser!!.uid)
+            .addSnapshotListener { snapshot, error ->
+                if (error != null) {
+                    close(error)
+                    return@addSnapshotListener
+                }
+
+                snapshot.let {
+                    val orders = it?.get(USER_ORDERS) as List<Map<String, Any>>
+                    val status = orders[orderId]["status"] as String
+                    trySend(status)
+                }
+            }
+        awaitClose { listener.remove() }
+    }
+
     override suspend fun saveToOrder(item: Item) {
         orderListDao.addToOrder(mapper.itemToDbModel(item))
     }
 
     companion object {
-
-        private const val USER_ID = "id"
-        private const val USERS_COUNTER = "counter"
         private const val USERS_COLLECTION = "clients"
-        private const val USERS_COUNTER_VAL = "lastId"
-        private const val USER_EMAIL = "email"
+        private const val USER_ORDERS = "orders"
         private const val DRINKS_COLLECTION = "Drinks"
         private const val FOOD_COLLECTION = "Food"
         private const val HOME_COLLECTION = "At home coffee"
         private const val MERCH_COLLECTION = "Merchandize"
+        private const val CLIENT_COLLECTION = "clients"
         private const val ITEM_NAME = "name"
         private const val ITEM_COST = "cost"
         private const val ITEM_IMAGE = "image"

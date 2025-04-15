@@ -39,8 +39,8 @@ class LoadFragment : Fragment() {
     }
 
     private fun launchObservers() {
-        viewModel.loggedId.observe(viewLifecycleOwner) {
-            if (it == 0L) {
+        viewModel.isLogged.observe(viewLifecycleOwner) {
+            if (!it) {
                 findNavController().navigate(LoadFragmentDirections.actionLoadFragmentToSignUpFragment())
             } else {
                 viewModel.getListItem()

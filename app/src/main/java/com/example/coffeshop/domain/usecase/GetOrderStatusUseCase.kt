@@ -1,14 +1,14 @@
 package com.example.coffeshop.domain.usecase
 
-import com.example.coffeshop.domain.entity.Item
 import com.example.coffeshop.domain.repository.CoffeeShopRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class GetCurrentOrderUseCase @Inject constructor(
+class GetOrderStatusUseCase @Inject constructor(
     private val repository: CoffeeShopRepository
 ) {
-    fun invoke(): Flow<List<Item>> {
-        return repository.getCurrentOrder()
+
+    suspend fun invoke(orderId: Int): Flow<String> {
+        return repository.getOrderStatusUseCase(orderId)
     }
 }
